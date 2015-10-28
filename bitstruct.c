@@ -1,14 +1,11 @@
 #include <stdio.h>
 
 struct card{
-	int rank;
-	int suit;
+	int rank:5;
+	int suit:2;
 };
 
 int main(void){
-	struct card ace_of_clubs;
-	ace_of_clubs.rank = ;
-	ace_of_clubs.suit = 'C';
-
-	printf("%d of %c\n", ace_of_clubs.rank, ace_of_clubs.suit);
+	
+	printf("size is %zd\n", sizeof(struct card));
 }
