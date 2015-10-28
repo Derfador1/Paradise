@@ -16,23 +16,26 @@ int main (int argc, char *argv[])
 	int input;
 	if(argc == 1)
 	{
-		printf("No values given, value defaulted to 99\n");
-		diceroll = 99;
+		printf("No values given, value defaulted to 100\n");
+		diceroll = 100;
+		input = 1;
 	}
 	else if(argc >= 2)
 	{
 		if (isalpha(*argv[1]))
 		{
 			printf("Command line argument [1] not a number; Defaulted to 99\n");
-			diceroll = 99;
+			diceroll = 100;
+			input = 1;
 		}
 		else if (isdigit(*argv[1]))
 		{
 			diceroll = atoi(argv[1]);
+			printf("Please enter histogram integer: ");
+			scanf("%d", &input);
 		}
 	}
-	printf("Please enter histogram integer: ");
-	scanf("%d", &input);
+	printf("The histogram number is %d\n", input);
 	for(numbercounter = 2; numbercounter <= 12; numbercounter++)
 	{
 		total[numbercounter] = 0;	//initializes each value count from 2 to 12 to 0;
@@ -58,7 +61,8 @@ int main (int argc, char *argv[])
 	{
 		double expected_percent = (100.0 * frequency[numbercounter] / 36);
 		int expected = (diceroll * frequency[numbercounter] / 36);
-		printf("Number: %d\tExpected rolls: %d\tPercentage of expected: %.2f%%\t Difference: %d\n", numbercounter, expected, expected_percent, (total[numbercounter] - expected));
+		double percentage = (100.0 * total[numbercounter] / diceroll);
+		printf("Number: %d\tExpected rolls: %d\tPercentage of expected: %.2f%%\t Difference: %.2f%%\n", numbercounter, expected, expected_percent, (percentage - expected_percent));
 	}
 
 	printf("Histogram information: \n");
