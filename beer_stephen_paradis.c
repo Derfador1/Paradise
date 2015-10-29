@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 	}
 	else if(argc >= 2)
 	{
-		if (isalpha(*argv[1]))
+		if (!isdigit(*argv[1]))
 		{
 			printf("Command line argument [1] not a number; Defaulted to 99\n");
 			bottlecount = 99;
@@ -24,6 +24,10 @@ int main(int argc, char **argv)
 			bottlecount = atoi(argv[1]);
 		}
 	}	
+	else
+	{
+		break;
+	}
 	while(1)
 	{
 		int bottle_ones;
@@ -31,10 +35,10 @@ int main(int argc, char **argv)
 		int next_ones;
 		int next_tens;
 		int nextbottle = bottlecount - 1;
-		bottle_ones = bottlecount % 10;//ones place
-		bottle_tens = bottlecount / 10;//tens places
-		next_ones = nextbottle % 10;// ones place
-		next_tens = nextbottle / 10;//tens place
+		bottle_ones = bottlecount % 10;//bottle ones place
+		bottle_tens = bottlecount / 10;//bottle tens places
+		next_ones = nextbottle % 10;//next bottle ones place
+		next_tens = nextbottle / 10;//next bottle tens place
 		if(bottlecount >= 3)
 		{
 
@@ -90,7 +94,7 @@ int main(int argc, char **argv)
 				printf("\n");
 			}
 		}
-		else if(bottlecount == 2)
+		else if(bottlecount == 2) //if bottle count is 2
 		{
 			printf("%s bottles of beer on the wall\n", singledigit[bottlecount]);
 			printf("%s bottles of beer\n",singledigit[bottlecount]);
@@ -100,7 +104,7 @@ int main(int argc, char **argv)
 			bottlecount = bottlecount - 1;
 			printf("\n");
 		}
-		else if(bottlecount == 1)
+		else if(bottlecount == 1) //if bottle count is 1
 		{
 			printf("%s bottle of beer on the wall\n", singledigit[bottlecount]);
 			printf("%s bottle of beer\n", singledigit[bottlecount]);
@@ -112,3 +116,4 @@ int main(int argc, char **argv)
 		}
 	}
 }
+
