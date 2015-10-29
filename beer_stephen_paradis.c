@@ -22,12 +22,13 @@ int main(int argc, char **argv)
 		else if (isdigit(*argv[1]))
 		{
 			bottlecount = atoi(argv[1]);
+			if (bottlecount <= 0)
+			{
+				printf("Command line argument [1] not a number; Defaulted to 99\n");
+				bottlecount = 99;
+			}
 		}
 	}	
-	else
-	{
-		break;
-	}
 	while(1)
 	{
 		int bottle_ones;
