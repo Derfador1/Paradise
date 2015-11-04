@@ -2,60 +2,93 @@
 #include <time.h>
 #include <stdlib.h>
 
+#define MAX_SIZE 6
+
+void secret_guess(int count, char * secret_holder);
+
 int main(void)
 {
-	int total_guesses = 0;
-	char computer_guess[4] = {'0', '0', '0', '0'};
-	char guess[4];
-	//guess = malloc(sizeof(guess));
-	int red;
+	char computer_guess[MAX_SIZE];
+	char *guess;
+	char *checker;
+	int red = 0;
 	int white = 0;
-	int y;
-	int x;
-	srand(time(NULL));
-	for (int count = 0; count < 4; count++)
-	{
-		int r = (rand() % 10) + '0';
-		computer_guess[count] = r;
-		printf("%c", computer_guess[count]);
-	}
-	printf("\n");
-	while(1)
-	{
-		printf("Guess a number: ");
-		scanf("%s", guess);
+	int red_counter;
+	int white_counter;
+	int count = 0;
+	int total_guesses = 0;
 
-		printf("\n");
-		
-		for (y = 0; y < 4; y++)
+	guess = malloc(MAX_SIZE);
+	checker = malloc(MAX_SIZE);
+	
+	srand(time(NULL));
+
+	secret_guess(count, computer_guess);
+
+	printf("\n");
+	
+	start:
+	{
+		while(1)
 		{
-			if (computer_guess[y] == guess[y])
+			printf("Guess a number: ");
+			fgets(guess, MAX_SIZE, stdin);
+
+			if (guess[4] == '\n')
 			{
-				red++;
-				guess[y] = 11;
+				printf("Correct\n");	
 			}
-			else
+			else if (guess[4] != '\n')
 			{
-				for (x = 0; x < 4; x++)
+				printf("enter again\n");
+				goto start;
+				//break;
+			}
+
+			for (red_counter = 0; red_counter < 4; red_counter++)
+			{
+				checker[red_counter] = guess[red_counter];
+				if (computer_guess[red_counter] == checker[red_counter])
 				{
-					if (computer_guess[y] == guess[x])
+					red++;
+					checker[red_counter] = 11;
+				}
+				else
+				{
+					for (white_counter = 0; white_counter < 4; white_counter++)
 					{
-						white++;
-						guess[x] = 11;
-						break;
+						checker[white_counter] = guess[white_counter];
+						if (computer_guess[red_counter] == checker[white_counter])
+						{
+							white++;
+							checker[white_counter] = 11;
+							break;
+						}
 					}
 				}
 			}
+
+			printf("R:%d and W:%d\n", red, white);
+			total_guesses++;
+			if (red == 4)
+			{
+				printf("You have won in %d guesses\n", total_guesses);
+				break;
+			}
+			red = 0;
+			white = 0;
 		}
-		printf("R:%d and W:%d\n", red, white);
-		total_guesses++;
-		if (red == 4)
-		{
-			printf("You have won in %d guesses\n", total_guesses);
-			break;
-		}
-		red = 0;
-		white = 0;
+		free(guess);
+		free(checker);
 	}
-	//free(guess);
+}
+
+void secret_guess(int count, char * secret_holder)
+{
+	for (count = 0; count < 4; count++)
+	{
+		int r = (rand() % 10) + '0';
+		secret_holder[count] = r;
+		//printf("%c", secret_holder[count]);
+	}
 }
